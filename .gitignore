@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+.cursor-runs/*
+!.cursor-runs/*.prompt.md
+!.cursor-runs/*.sh
+.env*
+!.env.example
+*.log
+.DS_Store
+test-fixtures/
+docs/private/

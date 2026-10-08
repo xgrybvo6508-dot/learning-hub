@@ -1,0 +1,49 @@
+---
+description: LLM pedagogy, JSON contracts, mind-map skill rules, and ADHD-safe AI output limits
+globs: src/agent/**, src/modules/**
+alwaysApply: false
+---
+
+# Pedagogy & prompts
+
+## Tone and language
+- **No lecturing.** Agents ask, probe, and reflect; they do not teach unless the user explicitly requests an explanation (e.g. Feynman "Explain this gap").
+- **Short output.** Prefer bullets and tight sentences. No preamble ("Sure!", "Great question!"), no repetition of the user's prompt.
+- **Feedback language** comes from Settings (`feedbackLanguage`, default **Russian**). UI chrome stays **English**.
+- Calm wording only. Never shame, never alarm red, never walls of text.
+
+## JSON contracts (every LLM call)
+- Each feature defines a **strict TypeScript type** and a **validator** (type guard or schema function) in `src/agent/` or the module. Reuse `extract-json.ts` for fenced JSON, prose wrappers, and truncated responses.
+- **Retry once** on invalid JSON or validation failure; then show a calm error and offer offline/clipboard fallback where the brief allows.
+- Unit tests must cover: valid payload, missing fields, wrong types, out-of-range numbers, markdown-fenced JSON, and malformed JSON.
+- Never trust model output in the DOM without validation. Never `eval` model text.
+
+## Mind-map skill (vision trainer and related prompts)
+Embed `src/agent/prompts/mindmap-skill.md` (`?raw`) for map reading. The model must follow:
+
+### Legend (symbols mean)
+- `→` leads to; `⇒` strong result; `↔` mutual link / interleaving
+- Plain or wavy line = loose association; braces/brackets = one group
+- Oval / circled = core concept; circled near center = main goal; box = goal/unit/chunk
+- `[ ]` task; underline / double underline = emphasis/key; crossed out = dropped/replaced
+- `?` / `??` open question; `=` definition/outcome; `+ ИИ` = AI in the loop; times = schedule block; `√…` = evaluate
+
+### Accuracy rules (non-negotiable)
+- **Never** put an unread word or a **guessed** arrow in the structured outline — mark it under `?` / `unreadable`.
+- **Do not** complete the map from world knowledge; only what is visible on the image.
+- An **uncertain** edge beats a wrong tree.
+- **Do not narrate** the drawing process; output structured read + critique only.
+
+### ADHD load on map feedback
+- One focus: read step then scores/issues, not both as competing walls of text.
+- **≤ 3** strengths; **≤ 5** issues; **≤ 5** missing items (enforce in validator and prompt).
+
+## Module-specific contracts (see brief §4)
+- **Mindmap:** `{ read, scores, strengths, issues, missing, nextDrill }` with score bounds 0–10.
+- **Voice — Research:** `{ question, why, context, subQuestions[3–6], sourcesWanted, outputFormat }`.
+- **Voice — Visualization:** explanation + Mermaid code (validate parse offline).
+- **Anki:** cards `{ front, back, type, tags[] }` with `type` ∈ `why | how | contrast | link`.
+- **Feynman:** `{ gaps, wrongAnalogies, missingLinks, jargonUnexplained, questions }` with **exactly 3** questions; system prompt forbids giving the correct explanation.
+
+## Personal glossary
+User-editable glossary entries are appended to mind-map prompts; **user corrections override** default legend wording in conflicts.

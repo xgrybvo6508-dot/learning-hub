@@ -1,0 +1,14 @@
+PLAN MODE. Read docs/private/BRIEF.md (the full build brief — it is the source of truth), docs/private/learning-system-map.md, all of .cursor/ (rules, agents, commands, hooks), content/courses/ (README.md, mindmapping-drills.md, interleaving-plan.md, the two course folders), docs/source/read-handwritten-mind-maps.SKILL.md, and skim the reference project /workspace/discrete-tasks (read-only: its src/lib, src/memory, src/agent, src/ui, vite.config.ts, package.json, e2e/, .github/workflows/deploy.yml) because the stack must be reused exactly.
+
+Then produce a complete, concrete implementation plan (no code edits) for the "Learning Hub" PWA, as ONE Markdown document that will be saved verbatim as PLAN.md. Sections:
+1. Goal & user (short).
+2. Architecture & module map with file paths: which files are copied from discrete-tasks (exact list from brief §1) and how they change; src/modules/{mistakes,courses,mindmap,voice,anki,feynman,interleave}; src/agent/prompts/*; content/courses bundling (content/courses is ALREADY committed in this repo — bundle it with import.meta.glob ?raw; plus a `scripts/sync-courses.ts` that re-copies /workspace/learning-system/courses when present).
+3. Data model: IndexedDB `learning-hub` schema v1 (stores per module), migrations, export/import JSON (`learning-hub-YYYY-MM-DD.json`, merge/replace, never settings/keys), settings `lh:settings` versioned (presets Nous Portal / OpenRouter / Custom; text model + vision model; feedback language default ru; Grok Bot link; glossary).
+4. LLM layer: client with ContentPart[] (image_url data URLs), OpenRouter headers, JSON-mode retry, AgentError; CSP changes; no-key fallback "Copy prompt + open Grok Bot".
+5. Per module (c) Mindmapping trainer, (b) Courses, (a) Mistakes, (e) Anki, (f) Feynman, (g) Interleaving, (d) Voice: screens, data, prompts + JSON contracts + validators, and the brief's acceptance criteria turned into a checklist of concrete tests (unit + e2e).
+6. UI/UX: home with 7 tiles + Settings + Data, tokens, iPad layouts.
+7. Testing & screenshots (brief §6 sizes), deploy (brief §5).
+8. Build phases IN THIS ORDER (model budget is limited): P0 tooling (done) → P1 core scaffold (stack copy, settings with presets + text/vision model fields, Data screen, home) → P2 (c) trainer → deploy → P3 (b) → P4 (a) → P5 (e) → P6 (f) → P7 (g) → P8 (d) → P9 iPad screenshot polish. For each phase: files, which sub-agent (tester, ui-designer, prompt-author, pedagogy-reviewer) and command (/module, /review, /ship) is used, and its Definition of Done (typecheck/lint/test/build green + tester pass).
+9. Risks (iOS Web Speech in standalone PWA, Goodnotes paste, Mermaid CSP, sql.js wasm CSP, vision model availability).
+
+Be concrete and decisive; no questions back. Output ONLY the Markdown plan via your plan tool.

@@ -5,6 +5,7 @@ import { updatePrompt } from './components/update-prompt';
 import type { UiRuntime } from './runtime';
 import { dataView } from './views/data';
 import { homeView } from './views/home';
+import { mindmapView } from '../modules/mindmap/view';
 import { modulePlaceholderView } from './views/module-placeholder';
 import { settingsView } from './views/settings';
 
@@ -64,6 +65,7 @@ export function mountApp(container: HTMLElement, runtime: Omit<UiRuntime, 'showT
     if (route === 'home') main.append(homeView());
     else if (route === 'settings') main.append(settingsView(fullRuntime));
     else if (route === 'data') main.append(dataView(fullRuntime));
+    else if (route === 'mindmap') main.append(mindmapView(fullRuntime));
     else if (route in MODULE_TITLES) {
       main.append(modulePlaceholderView(MODULE_TITLES[route]));
     } else main.append(homeView());

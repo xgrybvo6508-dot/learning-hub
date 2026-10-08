@@ -19,12 +19,7 @@ export interface CardState {
 }
 
 export type CauseCategory =
-  | 'concept-gap'
-  | 'misread'
-  | 'careless'
-  | 'wrong-method'
-  | 'memory-lapse'
-  | 'time-pressure';
+  'concept-gap' | 'misread' | 'careless' | 'wrong-method' | 'memory-lapse' | 'time-pressure';
 
 export interface MistakeRecord {
   id: string;
@@ -55,14 +50,32 @@ export interface CourseSessionRecord {
   note: string;
 }
 
+export type MindmapHistoryIssueType = 'structure' | 'grouping' | 'relations' | 'gap' | 'missing';
+
+export interface MindmapHistoryIssue {
+  type: MindmapHistoryIssueType;
+  detail: string;
+}
+
+export interface MindmapScoresSnapshot {
+  structure: number;
+  chunking: number;
+  relations: number;
+  coverage: number;
+  overall: number;
+}
+
 export interface MindmapHistoryRecord {
   id: string;
   drillId: string;
+  drillTitle: string;
   mode: 'topic' | 'text';
   sourceText?: string;
-  scores: Record<string, number>;
+  scores: MindmapScoresSnapshot;
   strengths: string[];
-  issues: string[];
+  issues: MindmapHistoryIssue[];
+  missing: string[];
+  nextDrill?: string;
   at: number;
   activeMs: number;
   thumbnailId: string | null;

@@ -42,6 +42,7 @@ async function bootstrap(root: HTMLElement): Promise<void> {
   const loaded = await store.load();
   mountApp(root, {
     store,
+    hub,
     localStore,
     settingsStorage: window.localStorage,
     agentClient: createAgentClient(),

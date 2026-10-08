@@ -3,9 +3,11 @@ import type { SettingsStorage } from '../agent/settings';
 import type { Clock } from '../lib/time';
 import type { MemoryStore } from '../memory/store';
 import type { KeyValueStore } from '../memory/storage/adapter';
+import type { HubIndexedDb } from '../memory/storage/indexeddb';
 
 export interface UiRuntime {
   readonly store: MemoryStore;
+  readonly hub: HubIndexedDb | null;
   readonly localStore: KeyValueStore;
   readonly settingsStorage: SettingsStorage;
   readonly agentClient: AgentClient;

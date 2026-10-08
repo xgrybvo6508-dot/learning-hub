@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      The Content-Security-Policy <meta> is added at build time by the CSP plugin in
+      vite.config.ts (the dev server needs inline styles, so it is build-only).
+      connect-src allows https: because the agent API origin is chosen by the user in
+      Settings at runtime. HTTP is limited to localhost for local providers.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0e0f13" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="%BASE_URL%icons/favicon.ico" sizes="any" />
+    <link rel="icon" href="%BASE_URL%icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="%BASE_URL%icons/apple-touch-icon-180x180.png" />
+    <title>Learning Hub</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>Learning Hub needs JavaScript to run.</noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -3,3 +3,4 @@
 - Next: verify, commit, create repo, push, Pages, screenshots
 - 20:45 commit 32f50ae tracker built; run 06-fix started (CSP inline styles, images, menu)
 - 20:58 06-fix green (CSP, images, menu); pushing + Pages
+- 21:05 live at https://xgrybvo6508-dot.github.io/learning-hub/ ; removed duplicate deploy.yml. DONE.

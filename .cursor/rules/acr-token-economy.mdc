@@ -1,0 +1,11 @@
+---
+description: Save tokens - concise answers, minimal reads, small diffs
+alwaysApply: true
+---
+- Answer briefly; no restating the task, no recaps, no long explanations unless asked.
+- Read only files needed for the task; prefer targeted search over opening whole files or folders.
+- Make minimal, focused edits; don't rewrite untouched code or reformat files.
+- Show only changed code (diffs/snippets), never full files back.
+- Don't add comments, docs or tests that weren't asked for, except where project rules require them.
+- Plan briefly before multi-file work; avoid trial-and-error loops: if a fix fails twice, stop and explain.
+- Don't run heavy commands (full test suites, builds) after every small change; run them once at the end.

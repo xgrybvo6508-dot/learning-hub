@@ -9,7 +9,7 @@ export const CSP = [
   "script-src 'self'",
   "style-src 'self'",
   "font-src 'self'",
-  "img-src 'self' data: blob:",
+  "img-src 'self' data: blob: https:",
   "connect-src 'self'",
   "manifest-src 'self'",
   "worker-src 'self'",

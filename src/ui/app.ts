@@ -46,12 +46,20 @@ export function mountApp(root: HTMLElement, deps: AppDeps): void {
     menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
   };
 
-  menuBtn.addEventListener('click', () => {
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     toggleMenu(menuPanel.hasAttribute('hidden'));
   });
 
   document.addEventListener('click', (e) => {
-    if (!menuPanel.hidden && !menuPanel.contains(e.target as Node) && e.target !== menuBtn) {
+    const target = e.target as Node;
+    if (!menuPanel.hidden && !menuPanel.contains(target) && !menuBtn.contains(target)) {
+      toggleMenu(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menuPanel.hidden) {
       toggleMenu(false);
     }
   });

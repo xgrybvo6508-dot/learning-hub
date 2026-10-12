@@ -26,4 +26,8 @@ describe('h', () => {
   it('rejects inline event handler attributes', () => {
     expect(() => h('div', { onclick: 'x()' })).toThrow();
   });
+
+  it('rejects inline style attributes', () => {
+    expect(() => h('div', { style: 'color: red' })).toThrow();
+  });
 });

@@ -1,6 +1,6 @@
 import { resolveCourseImage } from '../../course/bundled';
 import type { Course, Module } from '../../course/types';
-import { h } from '../../lib/dom';
+import { h, setCourseColor, setProgressPct } from '../../lib/dom';
 import { countCourseProgress, countModuleProgress, isModuleComplete } from '../../progress/math';
 import type { TrackerStore } from '../../store/tracker-store';
 import { burstConfetti } from '../confetti';
@@ -18,23 +18,23 @@ export function renderCourseView(
   const pct = total === 0 ? 0 : (done / total) * 100;
   const imgSrc = resolveCourseImage(course.image);
 
-  const header = h('header', { class: 'course-header', style: `--course-color: ${course.color}` }, [
+  const fill = h('div', {
+    class: 'progress__fill progress__fill--animated',
+    'data-progress': String(pct),
+  });
+  setProgressPct(fill, pct);
+  const header = h('header', { class: 'course-header' }, [
     h('button', { class: 'back-btn', type: 'button', 'aria-label': 'Назад' }, ['←']),
     h('div', { class: 'course-header__main' }, [
       imgSrc ? h('img', { class: 'course-header__img', src: imgSrc, alt: '' }) : null,
       h('h1', { class: 'course-header__title' }, [course.title]),
       h('div', { class: 'progress progress--header' }, [
-        h('div', { class: 'progress__track' }, [
-          h('div', {
-            class: 'progress__fill progress__fill--animated',
-            'data-progress': String(pct),
-            style: `width: ${String(pct)}%`,
-          }),
-        ]),
+        h('div', { class: 'progress__track' }, [fill]),
         h('span', { class: 'progress__label' }, [`${String(done)} / ${String(total)}`]),
       ]),
     ]),
   ]);
+  setCourseColor(header, course.color);
 
   header.querySelector('.back-btn')?.addEventListener('click', () => {
     navigate({ name: 'home' });

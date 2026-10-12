@@ -15,6 +15,11 @@ export function h<K extends keyof HTMLElementTagNameMap>(
   for (const [name, value] of Object.entries(attrs)) {
     if (value === false || value === null || value === undefined) continue;
     if (/^on/i.test(name)) throw new Error(`Event handler attributes are not allowed: ${name}`);
+    if (name === 'style') {
+      throw new Error(
+        'Inline style attributes are not allowed; use style.setProperty on the element',
+      );
+    }
     el.setAttribute(name, value === true ? '' : String(value));
   }
   for (const child of children) {
@@ -26,4 +31,12 @@ export function h<K extends keyof HTMLElementTagNameMap>(
 
 export function clear(el: Element): void {
   el.replaceChildren();
+}
+
+export function setProgressPct(el: HTMLElement, pct: number): void {
+  el.style.setProperty('--progress', String(pct));
+}
+
+export function setCourseColor(el: HTMLElement, color: string): void {
+  el.style.setProperty('--course-color', color);
 }

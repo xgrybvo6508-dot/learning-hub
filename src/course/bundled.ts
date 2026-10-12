@@ -31,7 +31,17 @@ function resolveImages(course: Course): Course {
 
 export function resolveCourseImage(image: string): string {
   if (!image) return '';
-  if (image.startsWith('data:') || image.startsWith('http://') || image.startsWith('https://')) {
+  const base = import.meta.env.BASE_URL;
+  if (
+    image.startsWith(base) ||
+    image.startsWith('data:') ||
+    image.startsWith('blob:') ||
+    image.startsWith('http://') ||
+    image.startsWith('https://')
+  ) {
+    return image;
+  }
+  if (image.startsWith('/') && !image.startsWith('images/')) {
     return image;
   }
   if (image.trimStart().startsWith('<svg')) {
@@ -44,8 +54,8 @@ export function resolveCourseImage(image: string): string {
       .pop() ?? image;
   const bundled = imageByBasename.get(name);
   if (bundled) return bundled;
-  const base = import.meta.env.BASE_URL;
-  return `${base}courses/${image.replace(/^\//, '')}`;
+  const rel = image.replace(/^\//, '').replace(/^images\//, '');
+  return `${base}courses/images/${rel}`;
 }
 
 const BUILTIN: Course[] = [

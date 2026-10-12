@@ -1,0 +1,15 @@
+---
+description: Playwright e2e + accessibility checks for the PWA (from awesome-cursorrules playwright rules, adapted for iPad/GitHub Pages)
+globs: e2e/**/*.ts, tests/**/*.spec.ts, playwright.config.ts
+alwaysApply: false
+---
+<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 00–40 take precedence on any conflict. -->
+# Playwright e2e and accessibility
+- Test critical user flows end-to-end; run on iPad viewports plus one desktop.
+- Remember the base path `/learning-hub/` in `baseURL`/`goto`.
+- Prefer role/label locators (`getByRole`, `getByLabel`) over CSS; this also checks semantics.
+- Keyboard: logical tab order, visible focus, every action reachable without a mouse.
+- Semantic HTML first, ARIA only where needed; live regions for async errors/status.
+- Text and controls meet WCAG 2.1 AA contrast; touch targets are at least 44px.
+- Automated WCAG scans with `@axe-core/playwright` only if it's added as a devDependency (ask first; don't add deps silently).
+- Offline: verify core flows still work with `context.setOffline(true)` after the SW installs.

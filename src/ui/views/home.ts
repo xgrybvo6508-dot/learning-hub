@@ -10,7 +10,7 @@ export function renderHome(
   doneIds: ReadonlySet<string>,
 ): void {
   root.replaceChildren(
-    h('header', { class: 'app-header' }, [h('h1', { class: 'app-title' }, ['Курсы'])]),
+    h('header', { class: 'app-header' }, [h('h1', { class: 'app-title' }, ['Reboard-AI'])]),
     h('div', { class: 'carousel', role: 'list' }, [
       ...courses.map((course) => courseCard(course, doneIds)),
       addCard(),

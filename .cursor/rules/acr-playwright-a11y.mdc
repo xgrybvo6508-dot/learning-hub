@@ -6,7 +6,7 @@ alwaysApply: false
 <!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 05, 10, 40 take precedence on any conflict. -->
 # Playwright e2e and accessibility
 - Test critical user flows end-to-end; run on iPad viewports plus one desktop.
-- Remember the base path `/learning-hub/` in `baseURL`/`goto`.
+- Remember the base path `/reboard-ai/` in `baseURL`/`goto`.
 - Prefer role/label locators (`getByRole`, `getByLabel`) over CSS; this also checks semantics.
 - Keyboard: logical tab order, visible focus, every action reachable without a mouse.
 - Semantic HTML first, ARIA only where needed; live regions for async errors/status.

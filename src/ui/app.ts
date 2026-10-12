@@ -67,7 +67,7 @@ export function mountApp(root: HTMLElement, deps: AppDeps): void {
   shell.querySelector('[data-action="export"]')?.addEventListener('click', () => {
     const blob = new Blob([deps.store.exportJson()], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = h('a', { href: url, download: 'learning-hub-progress.json' });
+    const a = h('a', { href: url, download: 'reboard-ai-progress.json' });
     a.click();
     URL.revokeObjectURL(url);
     toggleMenu(false);

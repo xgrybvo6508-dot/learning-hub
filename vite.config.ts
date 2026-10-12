@@ -20,7 +20,7 @@ export const CSP = [
 
 function cspPlugin(): Plugin {
   return {
-    name: 'learning-hub:csp',
+    name: 'reboard-ai:csp',
     apply: 'build',
     transformIndexHtml: {
       order: 'post',
@@ -38,7 +38,7 @@ function copyCourseImagesPlugin(): Plugin {
   const src = join(import.meta.dirname, 'data/courses/images');
   const dest = join(import.meta.dirname, 'public/courses/images');
   return {
-    name: 'learning-hub:copy-course-images',
+    name: 'reboard-ai:copy-course-images',
     buildStart() {
       mkdirSync(dest, { recursive: true });
       cpSync(src, dest, { recursive: true });
@@ -51,7 +51,7 @@ function copyCourseImagesPlugin(): Plugin {
 }
 
 export default defineConfig({
-  base: '/learning-hub/',
+  base: '/reboard-ai/',
   plugins: [
     copyCourseImagesPlugin(),
     cspPlugin(),
@@ -68,11 +68,11 @@ export default defineConfig({
         'icons/apple-touch-icon-180x180.png',
       ],
       manifest: {
-        name: 'Course Tracker',
-        short_name: 'Курсы',
+        name: 'Reboard-AI',
+        short_name: 'Reboard-AI',
         description: 'Офлайн-трекер прогресса по курсам.',
-        start_url: '/learning-hub/',
-        scope: '/learning-hub/',
+        start_url: '/reboard-ai/',
+        scope: '/reboard-ai/',
         display: 'standalone',
         background_color: '#0e0f13',
         theme_color: '#0e0f13',

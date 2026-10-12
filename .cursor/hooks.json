@@ -5,7 +5,7 @@
       {
         "command": ".cursor/hooks/guard-shell.sh",
         "timeout": 5,
-        "failClosed": false
+        "failClosed": true
       }
     ],
     "beforeReadFile": [
@@ -26,6 +26,18 @@
         "command": ".cursor/hooks/secret-scan.sh",
         "timeout": 30,
         "loop_limit": 2
+      },
+      {
+        "command": ".cursor/hooks/verify.sh",
+        "timeout": 180,
+        "loop_limit": 2
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": ".cursor/hooks/verify.sh",
+        "matcher": "Write|Edit|StrReplace|MultiEdit",
+        "timeout": 60
       }
     ]
   }

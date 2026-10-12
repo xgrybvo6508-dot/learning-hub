@@ -3,7 +3,7 @@ description: TypeScript best practices (from awesome-cursorrules typescript.mdc,
 globs: src/**/*.ts
 alwaysApply: false
 ---
-<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 00–40 take precedence on any conflict. -->
+<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 05, 10, 40 take precedence on any conflict. -->
 # TypeScript practices
 - No `any`; use `unknown` + type guards at boundaries. Avoid type assertions unless unavoidable.
 - `interface` for object shapes; `type` for unions, intersections, mapped types. Use built-in utility types and generics.

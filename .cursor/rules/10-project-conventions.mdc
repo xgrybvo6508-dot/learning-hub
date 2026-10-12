@@ -1,5 +1,5 @@
 ---
-description: Stack, folder layout, TypeScript strictness, testing and npm scripts for Learning Hub
+description: Stack, folder layout, TypeScript strictness, testing and npm scripts for the course tracker
 globs:
 alwaysApply: true
 ---
@@ -8,43 +8,33 @@ alwaysApply: true
 
 ## Stack
 - **Vite + vanilla TypeScript.** No React/Vue/Svelte/Angular and no heavy UI kits. Small DOM helpers in `src/lib` are fine.
-- **KaTeX** for math (`$...$` inline, `$$...$$` display). Bundle it locally so the app works offline. No CDN.
-- **PWA**: manifest + service worker (`vite-plugin-pwa`, `registerType: 'prompt'`). Core flows work offline; LLM features need network and a key (with clipboard/Grok fallbacks).
+- KaTeX is installed but not needed for the tracker; don't add it to new code.
+- **PWA**: manifest + service worker (`vite-plugin-pwa`, `registerType: 'prompt'`). Everything works offline; no network calls at runtime.
 - **Static only**: deployed to GitHub Pages (repo `xgrybvo6508-dot/learning-hub`). Vite `base: '/learning-hub/'`. Every asset URL, manifest `start_url`/`scope` and SW scope must respect this base. Use `import.meta.env.BASE_URL`, not hard-coded `/`.
 - Tooling: `vitest` + `happy-dom` + `fake-indexeddb`, `eslint` (typescript-eslint), `prettier`, `tsx`, `@playwright/test` for e2e. Node ≥ 20.19.
 
-## Folder layout
+## Folder layout (tracker)
 ```
 src/
-  main.ts              # bootstrap only
-  lib/                 # pure helpers: guards, result, time, dom, markdown, KaTeX, ids
-  memory/              # IndexedDB + localStorage adapters, versioned schema, migrations, SRS, interleaving picker
-  agent/               # OpenAI-compatible client, settings, errors, extract-json, validators
-  agent/prompts/       # prompt templates imported with ?raw (e.g. mindmap-skill.md)
-  modules/
-    mistakes/          # (a) mistake log + SM-2 re-check queue
-    courses/           # (b) course organizer + session log
-    mindmap/           # (c) mindmapping trainer (vision feedback)
-    voice/             # (d) voice window + structure-it LLM
-    anki/              # (e) deck generator + .apkg export
-    feynman/           # (f) Feynman-check agent (no lecturing)
-    interleave/        # (g) daily interleaving scheduler
-  ui/                  # views, components, CSS (see 30-design-system.mdc)
-content/
-  courses/             # bundled course Markdown (copied at build from learning-system when present)
+  main.ts          # bootstrap only
+  lib/             # pure helpers (dom, guards, ids)
+  data/            # course parser + bundled course data (from learning-system/courses-v2)
+  progress/        # done-mark store (versioned, migrations) + progress maths
+  ui/              # views/CSS — per Vladislav's design
 ```
-Tests are colocated as `*.test.ts` next to the module.
+`src/agent/`, `src/memory/`, `src/modules/*` are legacy (see 05-tracker-scope): don't extend.
+Tests are colocated as `*.test.ts`.
 
 ## Code style
-- `tsconfig`: `"strict": true`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`. No `any`. Use `unknown` + type guards at boundaries (API responses, localStorage, LLM JSON).
-- **Small pure modules.** Logic in `agent/`, `memory/`, `lib/`, `modules/**` core logic is pure and DOM-free where possible so it can be unit-tested. Side effects (fetch, storage, DOM) sit behind thin adapters that get injected.
+- `tsconfig`: `"strict": true`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`. No `any`. Use `unknown` + type guards at boundaries (localStorage/IndexedDB, parsed course data).
+- **Small pure modules.** Logic in `data/`, `progress/`, `lib/` is pure and DOM-free where possible so it can be unit-tested. Side effects (storage, DOM) sit behind thin adapters that get injected.
 - ES modules and named exports. One responsibility per file, roughly under 200 lines.
 - Persisted data has a `version` field and a migration function. Never silently drop user memory.
 - Errors are typed (`Result`-style or custom `Error` subclasses) and reach the UI as calm, plain-English messages.
 
 ## Testing
-- vitest covers SRS scheduling, interleaving picker, storage migrations, every LLM JSON validator, prompt builders, and module-specific logic (see `docs/private/BRIEF.md` §4 acceptance criteria).
-- Use a fake clock, fake storage and mocked `fetch`. No real network in unit tests.
+- vitest covers the course parser (IDs, titles, ✅ → done), progress maths, and storage migrations.
+- Fake storage; no network in tests. The stop hook (`.cursor/hooks/verify.sh`) runs typecheck + lint + tests automatically when TS changed.
 
 ## npm scripts (keep these names)
 | script | command |

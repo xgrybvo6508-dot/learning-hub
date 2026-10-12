@@ -5,7 +5,7 @@ Prepare a release to GitHub Pages (`xgrybvo6508-dot/learning-hub`, Vite base `/l
 1. `npm run typecheck`
 2. `npm run lint`
 3. `npm test`
-4. `npm run build`, then confirm that `dist/` asset URLs, `manifest.webmanifest` (`name` "Learning Hub", `start_url`/`scope`) and the service worker all use `/learning-hub/`.
+4. `npm run build`, then confirm that `dist/` asset URLs, `manifest.webmanifest` (`start_url`/`scope`) and the service worker all use `/learning-hub/`.
 5. Secret scan: `bash .cursor/hooks/secret-scan.sh < /dev/null`. It must print `{}`. Also confirm `git ls-files` has no `.env*` file other than `.env.example`.
 6. Only if **all** of the above are green, describe the deploy steps. Don't run them unless the user asks:
    - Commit with a clear message on `main`.

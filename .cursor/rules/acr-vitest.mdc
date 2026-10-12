@@ -3,7 +3,7 @@ description: Vitest unit-testing guidance (from awesome-cursorrules vitest rules
 globs: src/**/*.test.ts
 alwaysApply: false
 ---
-<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 00–40 take precedence on any conflict. -->
+<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 05, 10, 40 take precedence on any conflict. -->
 # Vitest unit tests
 - Focus on business logic and pure helpers (SRS, interleaving, migrations, validators, prompt builders).
 - Mock dependencies with `vi.mock` / injected fakes; use fake timers (`vi.useFakeTimers`), `fake-indexeddb`, a mocked `fetch`. No real network.

@@ -1,0 +1,22 @@
+---
+description: Strict product scope for the course tracker — read before any change
+alwaysApply: true
+---
+
+# Scope: course tracker (only this)
+
+The app **only records progress** through Vladislav's courses:
+- Courses → modules → pieces (e.g. `CUR-1` → `CUR-1.1`), each piece has a **done** mark.
+- Progress per module and per course (counts / %). That's all.
+- Data source: `/workspace/learning-system/courses-v2/` (`cursor.md`, `discrete.md`, `claude.md`). Parse headings `## <ID> · <title>` (module) and `### <ID> · <title>` (piece); a `✅` in a piece heading = initially done. Copy/bundle the data into the repo at build time; the app never fetches it at runtime.
+- Offline PWA, works on phone and iPad. Done marks persist locally (IndexedDB/localStorage, versioned). No accounts, no backend, no network calls.
+
+## Out of scope — do not build
+No queue/planner, no "what's next", no learning techniques (SRS, Anki, Feynman, interleaving, mind maps, voice), no AI/LLM calls or API keys, no stats beyond progress, no notifications, no gamification. Old module code in `src/modules/*` and `src/agent/` is legacy: don't extend it; remove it only when the user asks.
+
+## Design
+Visual design comes **from Vladislav**. Until he sends it, don't create or restyle UI. When it arrives, follow it exactly; the design-system rule only fills gaps he didn't specify.
+
+## Behaviour
+- Don't invent features, screens, settings or copy. If something is unclear, stop and ask.
+- Small steps; one change per run. Don't push or deploy unless asked.

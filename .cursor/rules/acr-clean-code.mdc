@@ -3,7 +3,7 @@ description: Clean code guidelines (from awesome-cursorrules clean-code.mdc); ap
 globs:
 alwaysApply: false
 ---
-<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 00–40 take precedence on any conflict. -->
+<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 05, 10, 40 take precedence on any conflict. -->
 # Clean code
 - Named constants instead of magic numbers/strings.
 - Names explain purpose; avoid unclear abbreviations.

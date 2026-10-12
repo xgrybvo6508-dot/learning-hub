@@ -3,7 +3,7 @@ description: Playwright e2e + accessibility checks for the PWA (from awesome-cur
 globs: e2e/**/*.ts, tests/**/*.spec.ts, playwright.config.ts
 alwaysApply: false
 ---
-<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 00–40 take precedence on any conflict. -->
+<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 05, 10, 40 take precedence on any conflict. -->
 # Playwright e2e and accessibility
 - Test critical user flows end-to-end; run on iPad viewports plus one desktop.
 - Remember the base path `/learning-hub/` in `baseURL`/`goto`.

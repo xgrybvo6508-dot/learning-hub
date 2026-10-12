@@ -17,6 +17,10 @@ Configured in `.cursor/hooks.json`. Scripts run from the repo root, read JSON on
 - Printing secrets: `printenv`, bare `env` / `env | …`, `export -p`/`declare -x`/bare `set`, `echo/printf $…KEY|TOKEN|SECRET|PASSW…`, `/proc/*/environ`, reading or copying `.env*` / `hosts.yml` / `auth.json` / keys, and `gh auth token`.
 - `curl|wget … | sh/bash/zsh/python/node…`, `bash <(curl …)`, `source <(curl …)`.
 
+## verify.sh (postToolUse on edits + stop)
+In `cursor-agent -p` (CLI 2026.10.01) the `stop` event does not fire (checked 2026-10-12), so after each Write/Edit `postToolUse` runs a quick typecheck and returns errors as `additional_context`. Full checks below run on `stop` where it fires (IDE / interactive).
+When `.ts`/config files changed, runs `typecheck`, `lint`, `vitest run` quietly (≈5–15 s). Green → `{}`; red → `followup_message` with the last 15 error lines (max 2 auto-retries). Skips when nothing relevant changed or the run was aborted.
+
 ## Testing
 ```bash
 bash .cursor/hooks/test-hooks.sh

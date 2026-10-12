@@ -6,6 +6,8 @@ alwaysApply: false
 
 # Toss-Style Design System Rules
 
+> Vladislav's own design always wins. Use these rules only for details his design doesn't specify; never restyle against it.
+
 ## Design Direction
 
 - Build quiet, high-trust product UI with clear hierarchy, generous spacing, and minimal ornament.

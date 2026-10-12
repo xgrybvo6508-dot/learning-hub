@@ -1,0 +1,14 @@
+---
+description: TypeScript best practices (from awesome-cursorrules typescript.mdc, adapted to vanilla TS + Vite)
+globs: src/**/*.ts
+alwaysApply: false
+---
+<!-- Adapted from PatrickJS/awesome-cursorrules (CC0). Project rules 00–40 take precedence on any conflict. -->
+# TypeScript practices
+- No `any`; use `unknown` + type guards at boundaries. Avoid type assertions unless unavoidable.
+- `interface` for object shapes; `type` for unions, intersections, mapped types. Use built-in utility types and generics.
+- Discriminated unions for state and results; `readonly` for data that must not change; handle null/undefined explicitly.
+- Explicit return types on exported functions. Prefer async/await; never leave a Promise rejection unhandled.
+- Naming: PascalCase types, camelCase values/functions, UPPER_CASE constants, boolean names like isX/hasX.
+- Keep types next to their use; share them only when they really are shared. Do not add barrel files or a global `types/` dir unless 10-project-conventions allows it.
+- Dependency injection for side effects (fetch, storage, clock, DOM), which matches the adapter rule in 10-project-conventions.

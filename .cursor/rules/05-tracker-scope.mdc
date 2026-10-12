@@ -14,8 +14,14 @@ The app **only records progress** through Vladislav's courses:
 ## Out of scope — do not build
 No queue/planner, no "what's next", no learning techniques (SRS, Anki, Feynman, interleaving, mind maps, voice), no AI/LLM calls or API keys, no stats beyond progress, no notifications, no gamification. Old module code in `src/modules/*` and `src/agent/` is legacy: don't extend it; remove it only when the user asks.
 
-## Design
-Visual design comes **from Vladislav**. Until he sends it, don't create or restyle UI. When it arrives, follow it exactly; the design-system rule only fills gaps he didn't specify.
+## Design (APPROVED by Vladislav, 2026-10-12) — follow exactly
+- Minimalist but alive. Dark background, large type, big touch targets (iPad + phone).
+- Home: horizontal snap-scrolling carousel of course cards + a "+ Курс" card. Each card: course's large minimalist image, title, progress bar with "12 / 45". Color + image come from course .md frontmatter (`color`, `image`).
+- Course screen: modules expand into pieces (title + short goal) with a round check. Checking flashes the course color; bar grows smoothly. Finishing a module → small confetti. Done pieces greyed out.
+- Smooth screen transitions: View Transitions API with CSS fallback; respect prefers-reduced-motion.
+- Add course: import .md (courses-v2 format incl. frontmatter; image = URL, data:/inline SVG, or bundled path) or create manually (title, modules, steps).
+- Progress in localStorage; JSON export/import. Legacy src/modules, src/agent may be removed for this tracker.
+- Nothing else.
 
 ## Behaviour
 - Don't invent features, screens, settings or copy. If something is unclear, stop and ask.

@@ -1,19 +1,16 @@
+import { cpSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 import type { Plugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
 
-// connect-src allows any https: origin because the agent API origin is chosen by the
-// user at runtime in Settings. Localhost HTTP is allowed for local OpenAI-compatible
-// servers. style-src-attr needs 'unsafe-inline' for KaTeX output.
-// wasm-unsafe-eval: sql.js (Anki export, later phases).
 export const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'wasm-unsafe-eval'",
+  "script-src 'self'",
   "style-src 'self'",
-  "style-src-attr 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data: blob:",
-  "connect-src 'self' https: http://localhost:* http://127.0.0.1:*",
+  "connect-src 'self'",
   "manifest-src 'self'",
   "worker-src 'self'",
   "object-src 'none'",
@@ -37,9 +34,26 @@ function cspPlugin(): Plugin {
   };
 }
 
+function copyCourseImagesPlugin(): Plugin {
+  const src = join(import.meta.dirname, 'data/courses/images');
+  const dest = join(import.meta.dirname, 'public/courses/images');
+  return {
+    name: 'learning-hub:copy-course-images',
+    buildStart() {
+      mkdirSync(dest, { recursive: true });
+      cpSync(src, dest, { recursive: true });
+    },
+    configureServer() {
+      mkdirSync(dest, { recursive: true });
+      cpSync(src, dest, { recursive: true });
+    },
+  };
+}
+
 export default defineConfig({
   base: '/learning-hub/',
   plugins: [
+    copyCourseImagesPlugin(),
     cspPlugin(),
     VitePWA({
       registerType: 'prompt',
@@ -54,9 +68,9 @@ export default defineConfig({
         'icons/apple-touch-icon-180x180.png',
       ],
       manifest: {
-        name: 'Learning Hub',
-        short_name: 'Hub',
-        description: 'Calm, offline study: mind maps, courses, spaced review.',
+        name: 'Course Tracker',
+        short_name: 'Курсы',
+        description: 'Офлайн-трекер прогресса по курсам.',
         start_url: '/learning-hub/',
         scope: '/learning-hub/',
         display: 'standalone',
@@ -82,7 +96,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2,webmanifest,wasm}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2,webmanifest}'],
         navigateFallback: 'index.html',
       },
       devOptions: {
